@@ -1,9 +1,9 @@
 import { Suspense } from "react"
-import { Image, Link, BlitzPage, useMutation, Routes } from "blitz"
+import { Image, Link, BlitzPage, useMutation, Routes, useQuery } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import logout from "app/auth/mutations/logout"
-import logo from "public/logo.png"
+import getJournals from "app/journals/queries/getJournals"
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -70,6 +70,12 @@ const Document = () => {
   )
 }
 
+const Journals = () => {
+  const [journals] = useQuery(getJournals, { where: { userId: 1 } })
+  console.log("journals", journals)
+  return <div></div>
+}
+
 const Home = () => {
   const date = new Date()
 
@@ -80,6 +86,9 @@ const Home = () => {
           {date.toDateString()}
         </p>
         <Document />
+        <Suspense fallback="Loading...">
+          <Journals />
+        </Suspense>
         <button>Save</button> | <button>New Day</button>
         <div className="buttons" style={{ marginTop: "1rem", marginBottom: "1rem" }}>
           <Suspense fallback="Loading...">
