@@ -5,6 +5,8 @@ import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import logout from "app/auth/mutations/logout"
 import getJournals from "app/journals/queries/getJournals"
 
+import { Textarea } from "app/journals/components/Textarea"
+
 /*
  * This file is just for a pleasant getting started page for your new app.
  * You can delete everything in here and start from scratch if you like.
@@ -51,25 +53,6 @@ const UserInfo = () => {
   }
 }
 
-const Document = () => {
-  return (
-    <>
-      <textarea
-        style={{
-          fontSize: 16,
-          width: "100%",
-          height: "600px",
-          border: "none",
-          outline: 0,
-          resize: "none",
-          overflow: "hidden",
-          // overflowY: "scroll",
-        }}
-      ></textarea>
-    </>
-  )
-}
-
 const Journals = () => {
   const [journals] = useQuery(getJournals, { where: { userId: 1 } })
   console.log("journals", journals)
@@ -77,25 +60,9 @@ const Journals = () => {
 }
 
 const Home = () => {
-  const date = new Date()
-
   return (
     <div className="container">
-      <main>
-        <p style={{ color: "rgb(77, 181, 89)", fontWeight: "bold", fontSize: 24 }}>
-          {date.toDateString()}
-        </p>
-        <Document />
-        <Suspense fallback="Loading...">
-          <Journals />
-        </Suspense>
-        <button>Save</button> | <button>New Day</button>
-        <div className="buttons" style={{ marginTop: "1rem", marginBottom: "1rem" }}>
-          <Suspense fallback="Loading...">
-            <UserInfo />
-          </Suspense>
-        </div>
-      </main>
+      <main>Welcome.</main>
 
       <footer></footer>
 
