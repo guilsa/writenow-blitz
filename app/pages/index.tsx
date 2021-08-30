@@ -68,6 +68,9 @@ const Home = () => {
         </Link>{" "}
         to start writing.
       </p>
+      <Suspense fallback="Loading...">
+        <UserInfo />
+      </Suspense>
     </div>
   )
 }
