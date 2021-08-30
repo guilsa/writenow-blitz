@@ -58,12 +58,7 @@ const Journals = () => {
 }
 
 const Home = () => {
-  return (
-    <div className="container">
-      <main>Welcome.</main>
-      <footer></footer>
-    </div>
-  )
+  return <div>Welcome!</div>
 }
 
 Home.suppressFirstRenderFlicker = true

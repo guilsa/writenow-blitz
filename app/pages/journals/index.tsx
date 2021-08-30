@@ -41,24 +41,16 @@ export const JournalsList = () => {
 
 const JournalsPage: BlitzPage = () => {
   return (
-    <div className="container">
-      <main>
-        <Head>
-          <title>Journals</title>
-        </Head>
+    <div>
+      <p>
+        <Link href={Routes.NewJournalPage()}>
+          <a>Create New Journal</a>
+        </Link>
+      </p>
 
-        <div>
-          <p>
-            <Link href={Routes.NewJournalPage()}>
-              <a>Create New Journal</a>
-            </Link>
-          </p>
-
-          <Suspense fallback={<div>Loading...</div>}>
-            <JournalsList />
-          </Suspense>
-        </div>
-      </main>
+      <Suspense fallback={<div>Loading...</div>}>
+        <JournalsList />
+      </Suspense>
     </div>
   )
 }
