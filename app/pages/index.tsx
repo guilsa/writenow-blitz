@@ -58,7 +58,18 @@ const Journals = () => {
 }
 
 const Home = () => {
-  return <div>Welcome!</div>
+  return (
+    <div>
+      <p>Welcome!</p>
+      <p>
+        Go{" "}
+        <Link href={Routes.JournalsPage()}>
+          <a>here</a>
+        </Link>{" "}
+        to start writing.
+      </p>
+    </div>
+  )
 }
 
 Home.suppressFirstRenderFlicker = true
