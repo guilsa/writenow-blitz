@@ -5,6 +5,8 @@ import getJournal from "app/journals/queries/getJournal"
 import deleteJournal from "app/journals/mutations/deleteJournal"
 import updateJournal from "app/journals/mutations/updateJournal"
 
+import { JournalForm, FORM_ERROR } from "app/journals/components/JournalForm"
+
 import { Textarea } from "app/journals/components/Textarea"
 
 export const Journal = () => {
@@ -33,8 +35,15 @@ export const Journal = () => {
       <Textarea initialData={journal.content} handleChange={(e) => setContent(e)} />
       <button
         onClick={async () => {
-          if (window.confirm("This will be saved. Continue?")) {
-            await updateJournalMutation({ id: journal.id, content: content })
+          try {
+            if (window.confirm("This will be saved. Continue?")) {
+              await updateJournalMutation({ id: journal.id, content: content })
+            }
+          } catch (error) {
+            console.error(error)
+            return {
+              [FORM_ERROR]: error.toString(),
+            }
           }
         }}
       >
@@ -50,7 +59,6 @@ export const Journal = () => {
       >
         Delete
       </button>
-      <div className="buttons" style={{ marginTop: "1rem", marginBottom: "1rem" }}></div>
     </>
   )
 }

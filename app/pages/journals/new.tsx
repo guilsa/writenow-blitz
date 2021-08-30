@@ -1,26 +1,36 @@
-import { Link, useRouter, useMutation, BlitzPage, Routes } from "blitz"
+import { useState } from "react"
+import { useRouter, useMutation, BlitzPage, Routes } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import createJournal from "app/journals/mutations/createJournal"
 import { JournalForm, FORM_ERROR } from "app/journals/components/JournalForm"
+
+import { Textarea } from "app/journals/components/Textarea"
 
 const NewJournalPage: BlitzPage = () => {
   const router = useRouter()
   const [createJournalMutation] = useMutation(createJournal)
 
-  return (
-    <div>
-      <h1>Create New Journal</h1>
+  const [content, setContent] = useState("")
 
-      <JournalForm
-        submitText="Create New Journal"
-        // TODO use a zod schema for form validation
-        //  - Tip: extract mutation's schema into a shared `validations.ts` file and
-        //         then import and use it here
-        // schema={CreateJournal}
-        // initialValues={{}}
-        onSubmit={async (values) => {
+  const date = new Date()
+
+  return (
+    <>
+      <p
+        style={{
+          color: "rgb(77, 181, 89)",
+          fontWeight: "bold",
+          fontSize: 24,
+          fontFamily: "Menlo",
+        }}
+      >
+        {date.toDateString()}
+      </p>
+      <Textarea initialData={""} handleChange={(e) => setContent(e)} />
+      <button
+        onClick={async () => {
           try {
-            const journal = await createJournalMutation(values)
+            const journal = await createJournalMutation({ content })
             router.push(Routes.ShowJournalPage({ journalId: journal.id }))
           } catch (error) {
             console.error(error)
@@ -29,14 +39,10 @@ const NewJournalPage: BlitzPage = () => {
             }
           }
         }}
-      />
-
-      <p>
-        <Link href={Routes.JournalsPage()}>
-          <a>Journals</a>
-        </Link>
-      </p>
-    </div>
+      >
+        Save
+      </button>
+    </>
   )
 }
 
