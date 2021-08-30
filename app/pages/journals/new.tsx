@@ -12,15 +12,13 @@ const NewJournalPage: BlitzPage = () => {
       <h1>Create New Journal</h1>
 
       <JournalForm
-        submitText="Create Journal"
+        submitText="Create New Journal"
         // TODO use a zod schema for form validation
         //  - Tip: extract mutation's schema into a shared `validations.ts` file and
         //         then import and use it here
         // schema={CreateJournal}
         // initialValues={{}}
         onSubmit={async (values) => {
-          console.log("values", values)
-
           try {
             const journal = await createJournalMutation(values)
             router.push(Routes.ShowJournalPage({ journalId: journal.id }))

@@ -1,0 +1,11 @@
+body {
+  font-family: "Menlo";
+}
+.container {
+  display: flex;
+  align-content: center;
+}
+main {
+  width: 800px;
+  margin: 0 auto;
+}

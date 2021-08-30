@@ -5,8 +5,6 @@ import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import logout from "app/auth/mutations/logout"
 import getJournals from "app/journals/queries/getJournals"
 
-import { Textarea } from "app/journals/components/Textarea"
-
 /*
  * This file is just for a pleasant getting started page for your new app.
  * You can delete everything in here and start from scratch if you like.
@@ -63,22 +61,7 @@ const Home = () => {
   return (
     <div className="container">
       <main>Welcome.</main>
-
       <footer></footer>
-
-      <style jsx global>{`
-        body {
-          font-family: "Menlo";
-        }
-        .container {
-          display: flex;
-          align-content: center;
-        }
-        main {
-          width: 800px;
-          margin: 0 auto;
-        }
-      `}</style>
     </div>
   )
 }

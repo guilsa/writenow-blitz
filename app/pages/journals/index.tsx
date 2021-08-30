@@ -29,35 +29,37 @@ export const JournalsList = () => {
         ))}
       </ul>
 
-      <button disabled={page === 0} onClick={goToPreviousPage}>
+      {/* <button disabled={page === 0} onClick={goToPreviousPage}>
         Previous
       </button>
       <button disabled={!hasMore} onClick={goToNextPage}>
         Next
-      </button>
+      </button> */}
     </div>
   )
 }
 
 const JournalsPage: BlitzPage = () => {
   return (
-    <>
-      <Head>
-        <title>Journals</title>
-      </Head>
+    <div className="container">
+      <main>
+        <Head>
+          <title>Journals</title>
+        </Head>
 
-      <div>
-        <p>
-          <Link href={Routes.NewJournalPage()}>
-            <a>Create Journal</a>
-          </Link>
-        </p>
+        <div>
+          <p>
+            <Link href={Routes.NewJournalPage()}>
+              <a>Create New Journal</a>
+            </Link>
+          </p>
 
-        <Suspense fallback={<div>Loading...</div>}>
-          <JournalsList />
-        </Suspense>
-      </div>
-    </>
+          <Suspense fallback={<div>Loading...</div>}>
+            <JournalsList />
+          </Suspense>
+        </div>
+      </main>
+    </div>
   )
 }
 
