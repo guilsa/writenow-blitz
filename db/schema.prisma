@@ -72,4 +72,5 @@ model Journal {
   content   String
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
+  wordCount Int      @default(0)
 }
