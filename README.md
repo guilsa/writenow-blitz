@@ -1,3 +1,11 @@
+# This project
+
+## Blitz.js feedback
+
+- [ ] Docs can show how to use require/import inside blitz console
+
+# Auto generated
+
 [![Blitz.js](https://raw.githubusercontent.com/blitz-js/art/master/github-cover-photo.png)](https://blitzjs.com)
 
 This is a [Blitz.js](https://github.com/blitz-js/blitz) app.
