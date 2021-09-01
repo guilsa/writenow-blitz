@@ -3,6 +3,22 @@
 ## Blitz.js feedback
 
 - [ ] Docs can show how to use require/import inside blitz console
+- [ ] Docs for seeds only show how to create, how about updating?
+
+## Update seeds
+
+Example:
+
+```
+const journals = await db.journal.findMany()
+
+for (i in journals) {
+  await db.journal.update({
+    where: { id: journals[i].id },
+    data: { wordCount: 13 },
+  })
+}
+```
 
 # Auto generated
 
