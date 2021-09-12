@@ -20,12 +20,12 @@ import { countWords } from "app/journals/utils/helper"
 
 export const Journal = () => {
   const router = useRouter()
-  const journalId = useParam("journalId", "number")
+  const dateId = useParam("dateId", "string")
   const [updateJournalMutation] = useMutation(updateJournal)
   const [deleteJournalMutation] = useMutation(deleteJournal)
-  const [journal] = useQuery(getJournal, { id: journalId })
+  const [journal] = useQuery(getJournal, { dateId: dateId })
 
-  const [content, setContent] = useState("")
+  const [content, setContent] = useState(journal.content)
   const [wordCount, setWordCount] = useState(0)
 
   const date = new Date()

@@ -32,8 +32,8 @@ export const JournalsList = () => {
     <div>
       <ul>
         {journals.map((journal) => (
-          <li key={journal.id}>
-            <Link href={Routes.ShowJournalPage({ journalId: journal.id })}>
+          <li key={journal.dateId}>
+            <Link href={Routes.ShowJournalPage({ dateId: journal.dateId })}>
               <a>{journal.content}</a>
             </Link>
           </li>
@@ -67,11 +67,11 @@ const JournalsPage: BlitzPage = () => {
                 wordCount: 0,
                 dateId: dateId,
               })
-              router.push(Routes.ShowJournalPage({ journalId: journal.id }))
+              router.push(Routes.ShowJournalPage({ dateId: journal.dateId }))
             } catch (error) {
               if (error.code === "P2002") {
-                console.warn("Unique constraint failed - probably dateId")
-                router.push(Routes.ShowJournalPage({ journalId: 1 }))
+                console.warn("Post already exists, fowarding...")
+                router.push(Routes.ShowJournalPage({ dateId: dateId }))
               }
               console.error(error)
               return {
