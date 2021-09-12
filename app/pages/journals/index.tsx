@@ -1,7 +1,18 @@
 import { Suspense } from "react"
-import { Head, Link, usePaginatedQuery, useRouter, BlitzPage, Routes } from "blitz"
+import {
+  Head,
+  Link,
+  usePaginatedQuery,
+  useRouter,
+  BlitzPage,
+  Routes,
+  useMutation,
+} from "blitz"
 import Layout from "app/core/layouts/Layout"
 import getJournals from "app/journals/queries/getJournals"
+
+import { FORM_ERROR } from "app/core/components/Form"
+import createJournal from "app/journals/mutations/createJournal"
 
 const ITEMS_PER_PAGE = 100
 
@@ -40,12 +51,30 @@ export const JournalsList = () => {
 }
 
 const JournalsPage: BlitzPage = () => {
+  const router = useRouter()
+  const [createJournalMutation] = useMutation(createJournal)
+
   return (
     <div>
       <p>
-        <Link href={Routes.NewJournalPage()}>
-          <a>Create New Journal</a>
-        </Link>
+        <button
+          onClick={async () => {
+            try {
+              const journal = await createJournalMutation({
+                content: "",
+                wordCount: 0,
+              })
+              router.push(Routes.ShowJournalPage({ journalId: journal.id }))
+            } catch (error) {
+              console.error(error)
+              return {
+                [FORM_ERROR]: error.toString(),
+              }
+            }
+          }}
+        >
+          Create New Journal
+        </button>
       </p>
 
       <Suspense fallback={<div>Loading...</div>}>

@@ -1,13 +1,22 @@
-import { Suspense, useState } from "react"
-import { Link, useRouter, useQuery, useParam, BlitzPage, useMutation, Routes } from "blitz"
+import { Suspense, useState, useEffect } from "react"
+import {
+  Link,
+  useRouter,
+  useQuery,
+  useParam,
+  BlitzPage,
+  useMutation,
+  Routes,
+} from "blitz"
 import Layout from "app/core/layouts/Layout"
 import getJournal from "app/journals/queries/getJournal"
 import deleteJournal from "app/journals/mutations/deleteJournal"
 import updateJournal from "app/journals/mutations/updateJournal"
 
 import { JournalForm, FORM_ERROR } from "app/journals/components/JournalForm"
-
 import { Textarea } from "app/journals/components/Textarea"
+
+import { countWords } from "app/journals/utils/helper"
 
 export const Journal = () => {
   const router = useRouter()
@@ -17,8 +26,13 @@ export const Journal = () => {
   const [journal] = useQuery(getJournal, { id: journalId })
 
   const [content, setContent] = useState("")
+  const [wordCount, setWordCount] = useState(0)
 
   const date = new Date()
+
+  useEffect(() => {
+    setWordCount(countWords(content))
+  }, [content])
 
   return (
     <>
@@ -32,12 +46,21 @@ export const Journal = () => {
       >
         {date.toDateString()}
       </p>
-      <Textarea initialData={journal.content} handleChange={(e) => setContent(e)} />
+      <Textarea
+        initialData={journal.content}
+        handleChange={(e) => setContent(e)}
+      />
+      <div>{wordCount} words</div>
+      <br />
       <button
         onClick={async () => {
           try {
             if (window.confirm("This will be saved. Continue?")) {
-              await updateJournalMutation({ id: journal.id, content: content })
+              await updateJournalMutation({
+                id: journal.id,
+                content: content,
+                wordCount: wordCount,
+              })
             }
           } catch (error) {
             console.error(error)

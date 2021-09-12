@@ -5,6 +5,7 @@ import { z } from "zod"
 const UpdateJournal = z.object({
   id: z.number(),
   content: z.string(),
+  wordCount: z.number(),
 })
 
 export default resolver.pipe(

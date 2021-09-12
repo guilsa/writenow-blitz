@@ -1,9 +1,20 @@
-import { Suspense } from "react"
-import { Head, Link, useRouter, useQuery, useMutation, useParam, BlitzPage, Routes } from "blitz"
+import { useEffect, useState, Suspense } from "react"
+import {
+  Head,
+  Link,
+  useRouter,
+  useQuery,
+  useMutation,
+  useParam,
+  BlitzPage,
+  Routes,
+} from "blitz"
 import Layout from "app/core/layouts/Layout"
 import getJournal from "app/journals/queries/getJournal"
 import updateJournal from "app/journals/mutations/updateJournal"
 import { JournalForm, FORM_ERROR } from "app/journals/components/JournalForm"
+
+import { countWords } from "app/journals/utils/helper"
 
 export const EditJournal = () => {
   const router = useRouter()
@@ -17,6 +28,15 @@ export const EditJournal = () => {
     }
   )
   const [updateJournalMutation] = useMutation(updateJournal)
+
+  const [content, setContent] = useState("")
+  const [wordCount, setWordCount] = useState(0)
+
+  const date = new Date()
+
+  useEffect(() => {
+    setWordCount(countWords(content))
+  }, [content])
 
   return (
     <>
