@@ -39,7 +39,7 @@ const NewJournalPage: BlitzPage = () => {
       <button
         onClick={async () => {
           try {
-            const journal = await createJournalMutation({ content })
+            const journal = await createJournalMutation({ content, wordCount })
             router.push(Routes.ShowJournalPage({ journalId: journal.id }))
           } catch (error) {
             console.error(error)
@@ -56,6 +56,8 @@ const NewJournalPage: BlitzPage = () => {
 }
 
 NewJournalPage.authenticate = true
-NewJournalPage.getLayout = (page) => <Layout title={"Create New Journal"}>{page}</Layout>
+NewJournalPage.getLayout = (page) => (
+  <Layout title={"Create New Journal"}>{page}</Layout>
+)
 
 export default NewJournalPage
