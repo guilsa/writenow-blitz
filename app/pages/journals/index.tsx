@@ -54,6 +54,8 @@ const JournalsPage: BlitzPage = () => {
   const router = useRouter()
   const [createJournalMutation] = useMutation(createJournal)
 
+  const dateId = new Date().toISOString().slice(0, 10)
+
   return (
     <div>
       <p>
@@ -63,6 +65,7 @@ const JournalsPage: BlitzPage = () => {
               const journal = await createJournalMutation({
                 content: "",
                 wordCount: 0,
+                dateId: dateId,
               })
               router.push(Routes.ShowJournalPage({ journalId: journal.id }))
             } catch (error) {

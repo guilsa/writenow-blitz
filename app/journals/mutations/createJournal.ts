@@ -3,6 +3,7 @@ import db from "db"
 import { z } from "zod"
 
 const CreateJournal = z.object({
+  dateId: z.string(),
   content: z.string(),
   wordCount: z.number(),
 })
