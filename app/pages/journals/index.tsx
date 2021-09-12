@@ -69,6 +69,10 @@ const JournalsPage: BlitzPage = () => {
               })
               router.push(Routes.ShowJournalPage({ journalId: journal.id }))
             } catch (error) {
+              if (error.code === "P2002") {
+                console.warn("Unique constraint failed - probably dateId")
+                router.push(Routes.ShowJournalPage({ journalId: 1 }))
+              }
               console.error(error)
               return {
                 [FORM_ERROR]: error.toString(),
