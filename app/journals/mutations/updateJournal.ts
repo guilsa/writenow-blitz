@@ -4,8 +4,8 @@ import { date, z } from "zod"
 
 import { hasDatePassed } from "app/core/utils"
 
-export class DayHasPassedError extends Error {
-  name = "DayHasPassedError"
+export class IsReadOnlyError extends Error {
+  name = "IsReadOnlyError"
   message = "Can't edit posts with dates in the past."
 }
 
@@ -21,7 +21,7 @@ export default resolver.pipe(
   resolver.authorize(),
   async ({ id, ...data }) => {
     if (hasDatePassed(data.dateId)) {
-      throw new DayHasPassedError()
+      throw new IsReadOnlyError()
     }
 
     // TODO: in multi-tenant app, you must add validation to ensure correct tenant

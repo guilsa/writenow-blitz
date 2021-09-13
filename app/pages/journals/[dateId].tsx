@@ -17,6 +17,7 @@ import { JournalForm, FORM_ERROR } from "app/journals/components/JournalForm"
 import { Textarea } from "app/journals/components/Textarea"
 
 import { countWords } from "app/journals/utils/helper"
+import { hasDatePassed } from "app/core/utils"
 
 export const Journal = () => {
   const router = useRouter()
@@ -28,7 +29,17 @@ export const Journal = () => {
   const [content, setContent] = useState(journal.content)
   const [wordCount, setWordCount] = useState(0)
 
-  const date = new Date()
+  const [isReadOnly, setIsReadOnly] = useState(true)
+
+  useEffect(() => {
+    if (dateId) {
+      if (hasDatePassed(dateId)) {
+        setIsReadOnly(true)
+      } else {
+        setIsReadOnly(false)
+      }
+    }
+  }, [dateId])
 
   useEffect(() => {
     setWordCount(countWords(content))
@@ -44,9 +55,10 @@ export const Journal = () => {
           fontFamily: "Menlo",
         }}
       >
-        {date.toDateString()}
+        {new Date().toDateString()}
       </p>
       <Textarea
+        readOnly={isReadOnly}
         initialData={journal.content}
         handleChange={(e) => setContent(e)}
       />

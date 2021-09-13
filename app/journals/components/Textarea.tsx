@@ -1,4 +1,4 @@
-export const Textarea = ({ initialData, handleChange }) => {
+export const Textarea = ({ initialData, handleChange, ...props }) => {
   return (
     <>
       <textarea
@@ -14,6 +14,7 @@ export const Textarea = ({ initialData, handleChange }) => {
         }}
         defaultValue={initialData}
         onChange={(e) => handleChange(e.target.value)}
+        {...props}
       ></textarea>
     </>
   )
