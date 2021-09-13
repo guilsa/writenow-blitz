@@ -53,7 +53,6 @@ const UserInfo = () => {
 
 const Journals = () => {
   const [journals] = useQuery(getJournals, { where: { userId: 1 } })
-  console.log("journals", journals)
   return <div></div>
 }
 

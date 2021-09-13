@@ -14,6 +14,8 @@ import getJournals from "app/journals/queries/getJournals"
 import { FORM_ERROR } from "app/core/components/Form"
 import createJournal from "app/journals/mutations/createJournal"
 
+import { getDateYYYYMMDD } from "app/core/utils"
+
 const ITEMS_PER_PAGE = 100
 
 export const JournalsList = () => {
@@ -54,7 +56,7 @@ const JournalsPage: BlitzPage = () => {
   const router = useRouter()
   const [createJournalMutation] = useMutation(createJournal)
 
-  const dateId = new Date().toISOString().slice(0, 10)
+  const dateId = getDateYYYYMMDD()
 
   return (
     <div>

@@ -60,6 +60,7 @@ export const Journal = () => {
                 id: journal.id,
                 content: content,
                 wordCount: wordCount,
+                dateId: journal.dateId,
               })
             }
           } catch (error) {
