@@ -4,10 +4,10 @@ import { date, z } from "zod"
 
 import { hasDatePassed } from "app/core/utils"
 
-export class IsReadOnlyError extends Error {
-  name = "IsReadOnlyError"
-  message = "Can't edit posts with dates in the past."
-}
+// export class IsReadOnlyError extends Error {
+//   name = "IsReadOnlyError"
+//   message = "Can't edit posts with dates in the past."
+// }
 
 const UpdateJournal = z.object({
   id: z.number(),
@@ -20,9 +20,9 @@ export default resolver.pipe(
   resolver.zod(UpdateJournal),
   resolver.authorize(),
   async ({ id, ...data }) => {
-    if (hasDatePassed(data.dateId)) {
-      throw new IsReadOnlyError()
-    }
+    // if (hasDatePassed(data.dateId)) {
+    //   throw new IsReadOnlyError()
+    // }
 
     // TODO: in multi-tenant app, you must add validation to ensure correct tenant
     const journal = await db.journal.update({ where: { id }, data })
