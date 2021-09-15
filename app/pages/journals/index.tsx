@@ -35,9 +35,18 @@ export const JournalsList = () => {
       <ul>
         {journals.map((journal) => (
           <li key={journal.dateId}>
-            <Link href={Routes.ShowJournalPage({ dateId: journal.dateId })}>
-              <a>{journal.content}</a>
-            </Link>
+            <div
+              style={{
+                width: 600,
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              <Link href={Routes.ShowJournalPage({ dateId: journal.dateId })}>
+                <a>{journal.content}</a>
+              </Link>
+            </div>
           </li>
         ))}
       </ul>
