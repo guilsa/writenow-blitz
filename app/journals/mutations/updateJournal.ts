@@ -1,8 +1,8 @@
 import { resolver } from "blitz"
 import db from "db"
-import { date, z } from "zod"
+import { z } from "zod"
 
-import { hasDatePassed } from "app/core/utils"
+// import { hasDatePassed, convertDashDelimitedYYYYMMDDToUnixEpoch } from "app/core/utils"
 
 // export class IsReadOnlyError extends Error {
 //   name = "IsReadOnlyError"
@@ -14,13 +14,15 @@ const UpdateJournal = z.object({
   content: z.string(),
   wordCount: z.number(),
   dateId: z.string(),
+  // clientOffsetSeconds: z.number(),
 })
 
 export default resolver.pipe(
   resolver.zod(UpdateJournal),
   resolver.authorize(),
   async ({ id, ...data }) => {
-    // if (hasDatePassed(data.dateId)) {
+    // const nowUNIXEpoch = convertDashDelimitedYYYYMMDDToUnixEpoch(data.dateId)
+    // if (hasDatePassed(nowUNIXEpoch, data.clientOffsetSeconds)) {
     //   throw new IsReadOnlyError()
     // }
 
