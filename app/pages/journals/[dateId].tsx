@@ -13,6 +13,7 @@ import getJournal from "app/journals/queries/getJournal"
 import deleteJournal from "app/journals/mutations/deleteJournal"
 import updateJournal from "app/journals/mutations/updateJournal"
 
+import Calendar from "app/core/components/Calendar"
 import { JournalForm, FORM_ERROR } from "app/journals/components/JournalForm"
 import { Textarea } from "app/journals/components/Textarea"
 
@@ -53,6 +54,7 @@ export const Journal = () => {
 
   return (
     <>
+      <Calendar />
       <p
         style={{
           color: "rgb(77, 181, 89)",
