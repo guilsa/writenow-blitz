@@ -12,7 +12,7 @@ export const Textarea = ({ initialData, handleChange, ...props }) => {
           overflow: "hidden",
           // overflowY: "scroll",
         }}
-        defaultValue={initialData}
+        value={initialData}
         onChange={(e) => handleChange(e.target.value)}
         // {...props}
       ></textarea>

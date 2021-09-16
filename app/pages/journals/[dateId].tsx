@@ -26,11 +26,12 @@ import {
 export const Journal = () => {
   const router = useRouter()
   const dateId = useParam("dateId", "string")
+
   const [updateJournalMutation] = useMutation(updateJournal)
   const [deleteJournalMutation] = useMutation(deleteJournal)
   const [journal] = useQuery(getJournal, { dateId: dateId })
 
-  const [content, setContent] = useState(journal.content)
+  const [content, setContent] = useState("")
   const [wordCount, setWordCount] = useState(0)
 
   const [isReadOnly, setIsReadOnly] = useState(true)
@@ -49,6 +50,10 @@ export const Journal = () => {
   // }, [dateId])
 
   useEffect(() => {
+    setContent(journal.content)
+  }, [journal.content])
+
+  useEffect(() => {
     setWordCount(countWords(content))
   }, [content])
 
@@ -63,11 +68,14 @@ export const Journal = () => {
           fontFamily: "Menlo",
         }}
       >
-        {new Date().toDateString()}
+        {dateId &&
+          new Date(
+            convertDashDelimitedYYYYMMDDToUnixEpoch(dateId)
+          ).toDateString()}
       </p>
       <Textarea
         readOnly={isReadOnly}
-        initialData={journal.content}
+        initialData={content}
         handleChange={(e) => setContent(e)}
       />
       <div>{wordCount} words</div>

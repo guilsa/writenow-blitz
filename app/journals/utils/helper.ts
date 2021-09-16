@@ -1,6 +1,6 @@
 const countWords = (content: string): number => {
   // Source: http://jsfiddle.net/deepumohanp/jZeKu/
-  if (content.length === 0) {
+  if (!content || content.length === 0) {
     return 0
   }
 
