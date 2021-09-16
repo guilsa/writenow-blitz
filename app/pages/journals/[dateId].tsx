@@ -83,15 +83,15 @@ export const Journal = () => {
       <button
         onClick={async () => {
           try {
-            if (window.confirm("This will be saved. Continue?")) {
-              await updateJournalMutation({
-                id: journal.id,
-                content: content,
-                wordCount: wordCount,
-                dateId: journal.dateId,
-                // clientOffsetSeconds: clientOffsetSeconds,
-              })
-            }
+            // if (window.confirm("This will be saved. Continue?")) {
+            await updateJournalMutation({
+              id: journal.id,
+              content: content,
+              wordCount: wordCount,
+              dateId: journal.dateId,
+              // clientOffsetSeconds: clientOffsetSeconds,
+            })
+            // }
           } catch (error) {
             console.error(error)
             return {
