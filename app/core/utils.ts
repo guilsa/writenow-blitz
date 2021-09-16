@@ -30,7 +30,10 @@ const dashDelimitedLocalTimeToString = (date: Date): string => {
 }
 
 const convertDashDelimitedYYYYMMDDToUnixEpoch = (str: string): number => {
-  let t: Array<string | number> = []
+  // TODO: Fix TS error below
+  ///Argument of type 'string | number | undefined' is not assignable to parameter of type 'number'. Type 'undefined' is not assignable to type 'number'.ts(2345)
+  // let t: Array<string | number> = []
+  let t: any = []
   t = str.split("-")
   // return Date.UTC(t[0], t[1] - 1, t[2])
   return new Date(t[0], t[1] - 1, t[2]).getTime()
