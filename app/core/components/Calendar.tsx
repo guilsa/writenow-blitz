@@ -35,6 +35,7 @@ const Calendar = () => {
             key={idx}
             completed={data.completed}
             dateId={data.date}
+            userCompletedDays={userCompletedDays}
             tooltip={new Date(
               convertDashDelimitedYYYYMMDDToUnixEpoch(data.date)
             ).toDateString()}
@@ -56,18 +57,41 @@ type GridProps = {
   completed: boolean
   tooltip: string
   dateId: string
+  userCompletedDays: Array<string> | null
 }
 
-const Grid = ({ completed, tooltip, dateId }: GridProps) => {
+const Grid = ({ completed, tooltip, dateId, userCompletedDays }: GridProps) => {
   const router = useRouter()
+
+  let isValid: boolean = false
+
+  if (userCompletedDays) {
+    isValid = userCompletedDays.includes(dateId)
+  }
 
   return (
     <>
-      <Link href={Routes.ShowJournalPage({ dateId: dateId })}>
+      {isValid ? (
+        <Link href={Routes.ShowJournalPage({ dateId: dateId })}>
+          <a
+            title={tooltip}
+            style={{
+              cursor: "pointer",
+              width: 15,
+              height: 25,
+              borderColor: "#35973f",
+              backgroundColor: completed ? "#35973f" : "white",
+              borderWidth: 2,
+              borderStyle: "solid",
+              marginRight: 2,
+              display: "inline-block",
+            }}
+          ></a>
+        </Link>
+      ) : (
         <a
           title={tooltip}
           style={{
-            cursor: "pointer",
             width: 15,
             height: 25,
             borderColor: "#35973f",
@@ -78,7 +102,7 @@ const Grid = ({ completed, tooltip, dateId }: GridProps) => {
             display: "inline-block",
           }}
         ></a>
-      </Link>
+      )}
     </>
   )
 }
