@@ -5,7 +5,7 @@ export default async function getJournalCompletedDays(
   _ = null,
   { session }: Ctx
 ) {
-  let results = Array()
+  let results: Array<string> = []
 
   if (!session.userId) return null
 
