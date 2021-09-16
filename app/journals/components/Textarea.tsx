@@ -1,7 +1,26 @@
+import { useRef, useState, useEffect, SyntheticEvent, ChangeEvent } from "react"
+
 export const Textarea = ({ initialData, handleChange, ...props }) => {
+  const [value, setValue] = useState<String>()
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null)
+
+  const handleChangeLocal = (e: React.FormEvent<HTMLInputElement>) => {
+    setValue(e.currentTarget.value)
+    handleChange(e.currentTarget.value)
+  }
+
+  useEffect(() => {
+    if (textareaRef && textareaRef.current) {
+      textareaRef.current.style.height = "0px"
+      const scrollHeight = textareaRef.current.scrollHeight
+      textareaRef.current.style.height = scrollHeight + "px"
+    }
+  }, [value])
+
   return (
     <>
       <textarea
+        ref={textareaRef}
         style={{
           fontSize: 16,
           width: "100%",
@@ -10,10 +29,9 @@ export const Textarea = ({ initialData, handleChange, ...props }) => {
           outline: 0,
           resize: "none",
           overflow: "hidden",
-          // overflowY: "scroll",
         }}
         value={initialData}
-        onChange={(e) => handleChange(e.target.value)}
+        onChange={(e) => handleChangeLocal(e)}
         // {...props}
       ></textarea>
     </>
