@@ -2,11 +2,18 @@ import { useQuery, useRouter, Routes, Link } from "blitz"
 import getJournalCompletedDays from "app/journals/queries/getJournalCompletedDays"
 
 import { convertDashDelimitedYYYYMMDDToUnixEpoch } from "../utils"
+import { useEffect, useState } from "react"
 
 const Calendar = () => {
   const [userCompletedDays] = useQuery(getJournalCompletedDays, null)
-  const month = new Date().getMonth() + 1
-  const year = new Date().getFullYear()
+
+  const [month, setMonth] = useState(0)
+  const [year, setYear] = useState(0)
+
+  useEffect(() => {
+    setMonth(new Date().getMonth() + 1)
+    setYear(new Date().getFullYear())
+  }, [])
 
   const emptyCalendar: RawCal[] = utils().generateMonthlyCalendar(month, year)
   const filledCalendar: Cal[] = utils().mergeObjs(
@@ -16,7 +23,13 @@ const Calendar = () => {
 
   return (
     <>
-      <div style={{ width: "100%", display: "inline-block" }}>
+      <span
+        onClick={() => setMonth(month - 1)}
+        style={{ fontSize: 12, cursor: "pointer" }}
+      >
+        &lt;&lt;{" "}
+      </span>
+      <div style={{ width: "100%", display: "inline" }}>
         {filledCalendar?.map((data, idx) => (
           <Grid
             key={idx}
@@ -28,6 +41,13 @@ const Calendar = () => {
           />
         ))}
       </div>
+      <span
+        onClick={() => setMonth(month + 1)}
+        style={{ fontSize: 12, cursor: "pointer" }}
+      >
+        {" "}
+        &gt;&gt;
+      </span>
     </>
   )
 }
@@ -51,7 +71,7 @@ const Grid = ({ completed, tooltip, dateId }: GridProps) => {
             width: 15,
             height: 25,
             borderColor: "#35973f",
-            backgroundColor: completed ? "#35973f" : "auto",
+            backgroundColor: completed ? "#35973f" : "white",
             borderWidth: 2,
             borderStyle: "solid",
             marginRight: 2,
@@ -72,17 +92,19 @@ interface Cal extends RawCal {
 }
 
 const utils = () => {
-  const _getDaysInMonth = (month: number, year: number) => {
+  const _getDaysInMonth = (month: number, year: number): number => {
     return new Date(year, month, 0).getDate()
   }
 
   const generateMonthlyCalendar = (month: number, year: number): RawCal[] => {
     const result: RawCal[] = []
+
     const daysInMonth = _getDaysInMonth(month, year)
     const format = (s: number) => (s < 10 ? "0" + s : s)
     for (let i = 1; i <= daysInMonth; i++) {
       result.push({ date: `${year}-${format(month)}-${format(i)}` })
     }
+
     return result
   }
 
