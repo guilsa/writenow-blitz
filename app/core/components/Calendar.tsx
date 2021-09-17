@@ -4,16 +4,19 @@ import getJournalCompletedDays from "app/journals/queries/getJournalCompletedDay
 import { convertDashDelimitedYYYYMMDDToUnixEpoch } from "../utils"
 import { useEffect, useState } from "react"
 
-const Calendar = () => {
+type CalendarProps = {
+  initialMonth: number
+  initialYear: number
+}
+
+const Calendar = ({
+  initialMonth = new Date().getMonth() + 1,
+  initialYear = new Date().getFullYear(),
+}: CalendarProps) => {
   const [userCompletedDays] = useQuery(getJournalCompletedDays, null)
 
-  const [month, setMonth] = useState(0)
-  const [year, setYear] = useState(0)
-
-  useEffect(() => {
-    setMonth(new Date().getMonth() + 1)
-    setYear(new Date().getFullYear())
-  }, [])
+  const [month, setMonth] = useState(initialMonth)
+  const [year, setYear] = useState(initialYear)
 
   const emptyCalendar: RawCal[] = utils().generateMonthlyCalendar(month, year)
   const filledCalendar: Cal[] = utils().mergeObjs(

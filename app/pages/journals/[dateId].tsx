@@ -37,6 +37,13 @@ export const Journal = () => {
   const [content, setContent] = useState("")
   const [wordCount, setWordCount] = useState(0)
   const [completed, setCompleted] = useState(false)
+  let initialMonth: number = 0,
+    initialYear: number = 1970
+
+  if (dateId) {
+    initialMonth = parseInt(dateId.split("-")[1] as string) // if 08, we want 8
+    initialYear = parseInt(dateId.split("-")[0] as string)
+  }
 
   const [startTime, setStartTime] = useState<Date | null>(null)
   const [completedTime, setCompletedTime] = useState<Date | null>(null)
@@ -91,7 +98,7 @@ export const Journal = () => {
 
   return (
     <>
-      <Calendar />
+      <Calendar initialMonth={initialMonth} initialYear={initialYear} />
       <p
         style={{
           color: "rgb(77, 181, 89)",
