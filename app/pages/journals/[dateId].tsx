@@ -17,13 +17,14 @@ import Calendar from "app/core/components/Calendar"
 import { JournalForm, FORM_ERROR } from "app/journals/components/JournalForm"
 import { Textarea } from "app/journals/components/Textarea"
 
+import { getDurationHHMMSS } from "app/core/utils"
 import { countWords } from "app/journals/utils/helper"
 import {
   convertDashDelimitedYYYYMMDDToUnixEpoch,
   // dateInPast,
 } from "app/core/utils"
 
-const WORD_COUNT = 10
+const WORD_COUNT = 750
 
 export const Journal = () => {
   const router = useRouter()
@@ -37,8 +38,8 @@ export const Journal = () => {
   const [wordCount, setWordCount] = useState(0)
   const [completed, setCompleted] = useState(false)
 
-  const [startTime, setStartTime] = useState(new Date())
-  const [completedTime, setCompletedTime] = useState(new Date())
+  const [startTime, setStartTime] = useState<Date | null>(null)
+  const [completedTime, setCompletedTime] = useState<Date | null>(null)
 
   const [isReadOnly, setIsReadOnly] = useState(true)
   const clientOffsetSeconds = new Date().getTimezoneOffset() * 60
@@ -88,9 +89,6 @@ export const Journal = () => {
     }
   }, [content])
 
-  console.log("start", startTime)
-  console.log("stop", completedTime)
-
   return (
     <>
       <Calendar />
@@ -113,6 +111,12 @@ export const Journal = () => {
         handleChange={(e) => setContent(e)}
       />
       <div>{wordCount} words</div>
+      <div>
+        duration:
+        {journal.completedTime
+          ? getDurationHHMMSS(journal.completedTime, journal.startTime)
+          : "00:00:00"}
+      </div>
       <br />
       <button
         onClick={async () => {
@@ -124,8 +128,8 @@ export const Journal = () => {
               wordCount: wordCount,
               dateId: journal.dateId,
               completed: completed,
-              startTime: startTime,
-              completedTime: completedTime,
+              ...(startTime ? { startTime: startTime } : {}),
+              ...(completedTime ? { completedTime: completedTime } : {}),
               // clientOffsetSeconds: clientOffsetSeconds,
             })
             // }

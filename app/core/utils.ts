@@ -39,10 +39,40 @@ const convertDashDelimitedYYYYMMDDToUnixEpoch = (str: string): number => {
   return new Date(t[0], t[1] - 1, t[2]).getTime()
 }
 
+const dateDifference = (
+  dateFuture: Date = new Date(),
+  dateNow: Date = new Date()
+): { [key: string]: number } => {
+  // https://stackoverflow.com/a/32514236/348282
+  var d = Math.abs(dateFuture.getTime() - dateNow.getTime()) / 1000 // delta
+  var r = {} // result
+  var s = {
+    hour: 3600,
+    minute: 60,
+    second: 1,
+  }
+
+  Object.keys(s).forEach(function (key) {
+    r[key] = Math.floor(d / s[key])
+    d -= r[key] * s[key]
+  })
+
+  return r
+}
+
+const getDurationHHMMSS = (dateFuture, dateNow) => {
+  if (!dateFuture || !dateNow) {
+    return
+  }
+  const diff = dateDifference(dateFuture, dateNow)
+  return `${diff.hour}h:${diff.minute}m:${diff.second}s`
+}
+
 export {
   getDateYYYYMMDD,
   hasDatePassed,
   dateInPast,
   dashDelimitedLocalTimeToString,
   convertDashDelimitedYYYYMMDDToUnixEpoch,
+  getDurationHHMMSS,
 }
