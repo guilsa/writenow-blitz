@@ -14,6 +14,7 @@ const UpdateJournal = z.object({
   content: z.string(),
   wordCount: z.number(),
   dateId: z.string(),
+  completed: z.boolean(),
   // clientOffsetSeconds: z.number(),
 })
 

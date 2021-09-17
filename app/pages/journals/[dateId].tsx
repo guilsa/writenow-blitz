@@ -23,6 +23,8 @@ import {
   // dateInPast,
 } from "app/core/utils"
 
+const WORD_COUNT = 10
+
 export const Journal = () => {
   const router = useRouter()
   const dateId = useParam("dateId", "string")
@@ -33,6 +35,10 @@ export const Journal = () => {
 
   const [content, setContent] = useState("")
   const [wordCount, setWordCount] = useState(0)
+  const [completed, setCompleted] = useState(false)
+
+  const [startTime, setStartTime] = useState(0)
+  const [completedTime, setCompletedTime] = useState(0)
 
   const [isReadOnly, setIsReadOnly] = useState(true)
   const clientOffsetSeconds = new Date().getTimezoneOffset() * 60
@@ -56,6 +62,34 @@ export const Journal = () => {
   useEffect(() => {
     setWordCount(countWords(content))
   }, [content])
+
+  useEffect(() => {
+    const handleSetCompletedTime = () => {
+      if (wordCount === WORD_COUNT) {
+        setCompletedTime(new Date().getTime())
+      }
+    }
+    const handleCompleted = () => {
+      if (wordCount >= WORD_COUNT) {
+        setCompleted(true)
+      } else {
+        if (!completed) {
+          setCompleted(false)
+        }
+      }
+    }
+    handleSetCompletedTime()
+    handleCompleted()
+  }, [wordCount, completed])
+
+  useEffect(() => {
+    if (content.length === 1) {
+      setStartTime(new Date().getTime())
+    }
+  }, [content])
+
+  console.log("start", startTime)
+  console.log("stop", completedTime)
 
   return (
     <>
@@ -89,6 +123,7 @@ export const Journal = () => {
               content: content,
               wordCount: wordCount,
               dateId: journal.dateId,
+              completed: completed,
               // clientOffsetSeconds: clientOffsetSeconds,
             })
             // }

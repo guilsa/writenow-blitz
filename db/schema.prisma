@@ -74,4 +74,5 @@ model Journal {
   userId    Int
   wordCount Int      @default(0)
   dateId    String   @unique
+  completed Boolean  @default(false)
 }
