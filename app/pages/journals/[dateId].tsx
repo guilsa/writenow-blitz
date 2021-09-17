@@ -37,8 +37,8 @@ export const Journal = () => {
   const [wordCount, setWordCount] = useState(0)
   const [completed, setCompleted] = useState(false)
 
-  const [startTime, setStartTime] = useState(0)
-  const [completedTime, setCompletedTime] = useState(0)
+  const [startTime, setStartTime] = useState(new Date())
+  const [completedTime, setCompletedTime] = useState(new Date())
 
   const [isReadOnly, setIsReadOnly] = useState(true)
   const clientOffsetSeconds = new Date().getTimezoneOffset() * 60
@@ -66,7 +66,7 @@ export const Journal = () => {
   useEffect(() => {
     const handleSetCompletedTime = () => {
       if (wordCount === WORD_COUNT) {
-        setCompletedTime(new Date().getTime())
+        setCompletedTime(new Date())
       }
     }
     const handleCompleted = () => {
@@ -84,7 +84,7 @@ export const Journal = () => {
 
   useEffect(() => {
     if (content.length === 1) {
-      setStartTime(new Date().getTime())
+      setStartTime(new Date())
     }
   }, [content])
 
@@ -124,6 +124,8 @@ export const Journal = () => {
               wordCount: wordCount,
               dateId: journal.dateId,
               completed: completed,
+              startTime: startTime,
+              completedTime: completedTime,
               // clientOffsetSeconds: clientOffsetSeconds,
             })
             // }

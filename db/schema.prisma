@@ -66,13 +66,15 @@ model Token {
 // }
 
 model Journal {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  content   String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int
-  wordCount Int      @default(0)
-  dateId    String   @unique
-  completed Boolean  @default(false)
+  id            Int       @id @default(autoincrement())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  content       String
+  user          User      @relation(fields: [userId], references: [id])
+  userId        Int
+  wordCount     Int       @default(0)
+  dateId        String    @unique
+  completed     Boolean   @default(false)
+  startTime     DateTime?
+  completedTime DateTime?
 }
